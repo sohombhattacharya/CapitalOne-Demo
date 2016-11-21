@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    // <!--
+    function getSenderBalance(){
+        if (document.getElementById("sender").value == ""){
+            document.getElementById("senderError").innerHTML = "Please input sender account id";
+        }
+        else{
+            document.getElementById("senderError").innerHTML = "";
+            $.ajax({
+                    url: "https://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value, 
+                    error: function() {
+                         $('#info').html('<p>An error has occurred</p>');
+                      },                
+                    success: function(data){
+                        console.log(data);
+                        console.log("success");
+                        if (!("error" in data))
+                            $("#senderBalance").html(data.body.balance);
+                    },
+                    type: "GET",
+                    crossDomain: true,
+                    headers: { 'Access-Control-Allow-Origin': '*' }
+            }); 
+        }
+    }
+    // -->
+</script>
+</head>
+<body>
+    <div>
+        Account ID of Sender: <input type="text" id="sender" value="">
+        Account ID of Receiver: <input type="text" id="receiver" value="">
+        <button onclick="getSenderBalance()">Get Sender Account Balance</button>
+        <button onclick="receiverBalance()">Get Receiver Account Balance</button>
+        <p id="senderError"></p>
+        <p id="receiverError"></p>
+    </div>    
+    <div>
+        <p id="senderBalance"></p>
+        <p id="receiverBalance"></p>
+    </div>
+</body>
+</html>
