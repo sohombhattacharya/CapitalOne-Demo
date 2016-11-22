@@ -18,7 +18,7 @@
         else{
             document.getElementById("senderError").innerHTML = "";
             $.ajax({
-                    url: "http://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value, 
+                    url: "https://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value, 
                     dataType: "json",
                     error: function() {
                          document.getElementById("senderError").innerHTML = "Error on getting account balance";
@@ -40,7 +40,7 @@
         else{
             document.getElementById("receiverError").innerHTML = "";
             $.ajax({
-                    url: "http://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("receiver").value, 
+                    url: "https://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("receiver").value, 
                     dataType: "json",
                     error: function() {
                          document.getElementById("receiverError").innerHTML = "Error on getting account balance";
