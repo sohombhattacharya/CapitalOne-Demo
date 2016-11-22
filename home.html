@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
     // <!--
     function getSenderBalance(){
@@ -11,37 +18,95 @@
         else{
             document.getElementById("senderError").innerHTML = "";
             $.ajax({
-                    url: "https://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value, 
+                    url: "http://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value, 
+                    dataType: "json",
                     error: function() {
-                         $('#info').html('<p>An error has occurred</p>');
+                         document.getElementById("senderError").innerHTML = "Error on getting account balance";
                       },                
                     success: function(data){
-                        console.log(data);
-                        console.log("success");
-                        if (!("error" in data))
-                            $("#senderBalance").html(data.body.balance);
+                        if (!("error" in data)){
+                            var balanceStream = data.balance; 
+                            $("#senderBalance").html(balanceStream);
+                        }
                     },
-                    type: "GET",
-                    crossDomain: true,
-                    headers: { 'Access-Control-Allow-Origin': '*' }
+                    type: "GET"
             }); 
         }
     }
+    function getReceiverBalance(){
+        if (document.getElementById("receiver").value == ""){
+            document.getElementById("receiverError").innerHTML = "Please input receiver account id";
+        }
+        else{
+            document.getElementById("receiverError").innerHTML = "";
+            $.ajax({
+                    url: "http://capitalone-rest-api.herokuapp.com/api/accounts/" + document.getElementById("receiver").value, 
+                    dataType: "json",
+                    error: function() {
+                         document.getElementById("receiverError").innerHTML = "Error on getting account balance";
+                      },                
+                    success: function(data){
+                        if (!("error" in data)){
+                            var balanceStream = data.balance; 
+                            $("#receiverBalance").html(balanceStream);
+                        }
+                    },
+                    type: "GET"
+            }); 
+        }
+    }    
     // -->
 </script>
 </head>
 <body>
-    <div>
-        Account ID of Sender: <input type="text" id="sender" value="">
-        Account ID of Receiver: <input type="text" id="receiver" value="">
-        <button onclick="getSenderBalance()">Get Sender Account Balance</button>
-        <button onclick="receiverBalance()">Get Receiver Account Balance</button>
+<!--
+    <div class="well">
+        <div class="form-group">
+          <label for="senderAccountID">Account ID of Sender: </label>
+          <input type="text" class="form-control" id="sender" value="">
+        </div>
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver: </label>
+          <input type="text" class="form-control" id="receiver" value="">
+        </div>    
+        <button onclick="getSenderBalance()" class="btn btn-primary">Get Sender Account Balance</button>
+        <button onclick="getReceiverBalance()" class="btn btn-success">Get Receiver Account Balance</button>
         <p id="senderError"></p>
         <p id="receiverError"></p>
     </div>    
-    <div>
+    <div class="well">
         <p id="senderBalance"></p>
         <p id="receiverBalance"></p>
     </div>
+-->
+<div class="container">
+  <h1>Demo</h1>
+    <div class="well">
+        <div class="form-group">
+          <label for="senderAccountID">Account ID of Sender: </label>
+          <input type="text" class="form-control" id="sender" value="">
+        </div>
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver: </label>
+          <input type="text" class="form-control" id="receiver" value="">
+        </div>    
+        <button onclick="getSenderBalance()" class="btn btn-primary">Get Sender Account Balance</button>
+        <button onclick="getReceiverBalance()" class="btn btn-success">Get Receiver Account Balance</button>
+        <p id="senderError"></p>
+        <p id="receiverError"></p>
+    </div>     
+  <div class="row">
+    <div class="col-sm-6">
+        <h1><dt>Sender Account Balance</dt></h1>
+        <h2 id="senderBalance" class="text-danger" value=""></h2>
+    </div>
+    <div class="col-sm-6">
+        <h1><dt>Receiver Account Balance</dt></h1>
+        <h2 id="receiverBalance" class="text-danger" value=""></h2>
+    </div>
+  </div>
+</div>    
+    
+    
 </body>
 </html>
