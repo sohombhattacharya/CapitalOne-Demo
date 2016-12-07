@@ -25,7 +25,7 @@
                       },                
                     success: function(data){
                         if (!("error" in data)){
-                            var balanceStream = data.balance; 
+                            var balanceStream = "$" + data.balance.toFixed(2); 
                             $("#senderBalance").html(balanceStream);
                         }
                     },
@@ -47,7 +47,7 @@
                       },                
                     success: function(data){
                         if (!("error" in data)){
-                            var balanceStream = data.balance; 
+                            var balanceStream = "$" + data.balance.toFixed(2); 
                             $("#receiverBalance").html(balanceStream);
                         }
                     },
